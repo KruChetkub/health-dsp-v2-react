@@ -86,6 +86,32 @@ function App() {
           if (jsonData.error) {
               throw new Error(jsonData.error);
           }
+
+          // --- WORKAROUND: Inject Mock Regional Data for KPI 1 ---
+          // Since the Google Sheet 'RegionalData' might not be fully populated yet,
+          // we inject mock data for the first KPI so the user can test the drilldown feature.
+          if (jsonData.kpiList && jsonData.kpiList.length > 0) {
+              const kpi1 = jsonData.kpiList.find(k => k.id === '1' || k.id === 1);
+              if (kpi1 && (!kpi1.regionalData || kpi1.regionalData.length === 0)) {
+                  kpi1.regionalData = [
+                      { region: 'เขตฯ 01', score: 45.98 },
+                      { region: 'เขตฯ 02', score: 66.97 },
+                      { region: 'เขตฯ 03', score: 62.01 },
+                      { region: 'เขตฯ 04', score: 64.69 },
+                      { region: 'เขตฯ 05', score: 61.10 },
+                      { region: 'เขตฯ 06', score: 60.21 },
+                      { region: 'เขตฯ 07', score: 52.36 },
+                      { region: 'เขตฯ 08', score: 64.90 },
+                      { region: 'เขตฯ 09', score: 55.79 },
+                      { region: 'เขตฯ 10', score: 55.64 },
+                      { region: 'เขตฯ 11', score: 57.09 },
+                      { region: 'เขตฯ 12', score: 66.56 },
+                      { region: 'เขตฯ 13', score: 0.00 }
+                  ];
+              }
+          }
+          // --------------------------------------------------------
+
           setData(jsonData);
       }
     } catch (err) {
