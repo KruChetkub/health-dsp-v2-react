@@ -52,7 +52,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentMonthYear, setCurrentMonthYear] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
   const [selectedKPI, setSelectedKPI] = useState(null); // New state for drilldown
 
   // Replace this placeholder with your actual Google Apps Script Web App URL
