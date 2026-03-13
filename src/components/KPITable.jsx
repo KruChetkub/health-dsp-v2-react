@@ -32,21 +32,28 @@ const KPITable = ({ kpiList, onRowClick }) => {
                                 </td>
                             </tr>
                         ) : (
-                            kpiList.map((kpi, index) => (
-                                <tr 
-                                    key={kpi.id || index} 
-                                    className="border-b border-gray-50 hover:bg-blue-50/50 transition-colors cursor-pointer group"
-                                    onClick={() => onRowClick && onRowClick(kpi)}
-                                >
-                                    <td className="p-5 text-center text-gray-500 font-medium border-r border-gray-50">{kpi.id}</td>
-                                    <td className="p-5 font-medium text-gray-800 border-r border-gray-50">{kpi.name}</td>
-                                    <td className="p-5 text-center text-gray-400 group-hover:text-blue-500 transition-colors">
-                                        <svg className="w-6 h-6 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </td>
-                                </tr>
-                            ))
+                            kpiList.map((kpi, index) => {
+                                const hasRegionalData = kpi.regionalData && kpi.regionalData.length > 0;
+                                return (
+                                    <tr 
+                                        key={kpi.id || index} 
+                                        className={`border-b border-gray-50 transition-colors ${
+                                            hasRegionalData ? 'hover:bg-blue-50/50 cursor-pointer group' : 'hover:bg-gray-50'
+                                        }`}
+                                        onClick={() => hasRegionalData && onRowClick && onRowClick(kpi)}
+                                    >
+                                        <td className="p-5 text-center text-gray-500 font-medium border-r border-gray-50">{kpi.id}</td>
+                                        <td className="p-5 font-medium text-gray-800 border-r border-gray-50">{kpi.name}</td>
+                                        <td className="p-5 text-center text-gray-400 group-hover:text-blue-500 transition-colors">
+                                            {hasRegionalData && (
+                                                <svg className="w-6 h-6 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                                                </svg>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })
                         )}
                     </tbody>
                 </table>
